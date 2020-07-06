@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tu dodajemy książki do domowej biblioteki</title>
+    <style>
+        table,
+        th,
+        tr,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<h2>Lista książek</h2>
+
+<table>
+    <thead>
+        <th>Tytuł</th>
+        <th>Autor</th>
+        <th>Opis</th>
+        <th>Czy przeczytane?</th>
+    </thead>
+    {% for book in home_library %}
+    <tr>
+        <td><a href="/homelibrary/{{ loop.index }}">{{ book.title }}</a></td>
+        <td><a href="/homelibrary/{{ loop.index }}">{{ book.author }}</a></td>
+        <td>{{ book.description }}</td>
+        <td>{{ book.read }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<div>
+    <h2> Dodaj książkę do domowej biblioteki: </h2>
+    <form method="POST" action="/homelibrary/">
+        {{ form.hidden_tag() }}
+        <table>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <tr>
+                <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                <td>{{ field }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Go">
+    </form>
+</div>
+</body>
+
+</html>
